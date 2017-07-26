@@ -4,7 +4,7 @@ def score(game): # az argument az eredmény stringként kifejezve
     first_roll = True # a kör első gurítása
     for i in range(len(game)): # végigiterál az eredmény karakterein
         if game[i] == '/': # ha spare van, a következő kör első gurításának eredménye ide számlálódik bónuszként
-            result += 10 - last # hozzáadja a következő gurítás első eredményét bónuszként
+            result += 10 - get_value(game[i-1]) # hozzáadja a következő gurítás első eredményét bónuszként
         else:
             result += get_value(game[i]) # hozzáadja az aktuális értéket
         # if not first_roll:
@@ -16,7 +16,6 @@ def score(game): # az argument az eredmény stringként kifejezve
                     result += 10 - get_value(game[i+1]) # a spare értéke
                 elif game[i] in 'xX' and game[i+2] != '/':
                     result += get_value(game[i+2]) # hozzáadjuk a következő gurítás értékét is
-        last = get_value(game[i]) # ???
         if not first_roll: # a második kör végén hozzáad egyet a körszámlálóhoz
             frame += 1
         if first_roll: # az első gurítás végén átvált a második felére
