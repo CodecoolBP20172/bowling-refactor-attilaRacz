@@ -1,13 +1,13 @@
 def score(game): # az argument az eredmény stringként kifejezve
     result = 0 # az eredmény számláló
     frame = 1 # a kör számláló
-    in_first_half = True # a kör első gurítása
+    first_roll = True # a kör első gurítása
     for i in range(len(game)): # végigiterál az eredmény karakterein
         if game[i] == '/': # ha spare van, a következő kör első gurításának eredménye ide számlálódik bónuszként
             result += 10 - last # hozzáadja a következő gurítás első eredményét bónuszként
         else:
             result += get_value(game[i]) # hozzáadja az aktuális értéket
-        # if not in_first_half:
+        # if not first_roll:
             # frame += 1
         if frame < 10  and get_value(game[i]) == 10: # ha 10 kör alatt vagyunk
             if game[i] == '/': # ha spare van, hozzáadjuk a következő kör első értékét is
@@ -19,14 +19,14 @@ def score(game): # az argument az eredmény stringként kifejezve
                 else:
                     result += get_value(game[i+2]) # hozzáadjuk a következő gurítás értékét is
         last = get_value(game[i]) # ???
-        if not in_first_half: # a második kör végén hozzáad egyet a körszámlálóhoz
+        if not first_roll: # a második kör végén hozzáad egyet a körszámlálóhoz
             frame += 1
-        if in_first_half == True: # az első gurítás végén átvált a második felére 
-            in_first_half = False
+        if first_roll == True: # az első gurítás végén átvált a második felére
+            first_roll = False
         else:
-            in_first_half = True # egyébként hagyja
+            first_roll = True # egyébként hagyja
         if game[i] == 'X' or game[i] == 'x': # ha strike-ot gurítottunk, a következő kör első gurítása jön
-            in_first_half = True
+            first_roll = True
             frame += 1
     return result
 
