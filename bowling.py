@@ -10,22 +10,20 @@ def score(game): # az argument az eredmény stringként kifejezve
         # if not first_roll:
             # frame += 1
         if frame < 10  and get_value(game[i]) == 10: # ha 10 kör alatt vagyunk
-            if game[i] == '/': # ha spare van, hozzáadjuk a következő kör első értékét is
+            if game[i] in 'xX/': # ha spare van, hozzáadjuk a következő kör első értékét is
                 result += get_value(game[i+1])
-            elif game[i] == 'X' or game[i] == 'x': # ha strike van, hozzáadjuk a következő kör első értékét is
-                result += get_value(game[i+1])
-                if game[i+2] == '/': # ha a strike után kettőve spare-t gurítunk, hozzáadjuk a spare értékét
+                if game[i] in 'xX' and game[i+2] == '/': # ha a strike után kettőve spare-t gurítunk, hozzáadjuk a spare értékét
                     result += 10 - get_value(game[i+1]) # a spare értéke
-                else:
+                elif game[i] in 'xX' and game[i+2] != '/':
                     result += get_value(game[i+2]) # hozzáadjuk a következő gurítás értékét is
         last = get_value(game[i]) # ???
         if not first_roll: # a második kör végén hozzáad egyet a körszámlálóhoz
             frame += 1
-        if first_roll == True: # az első gurítás végén átvált a második felére
+        if first_roll: # az első gurítás végén átvált a második felére
             first_roll = False
         else:
             first_roll = True # egyébként hagyja
-        if game[i] == 'X' or game[i] == 'x': # ha strike-ot gurítottunk, a következő kör első gurítása jön
+        if game[i] in 'xX': # ha strike-ot gurítottunk, a következő kör első gurítása jön
             first_roll = True
             frame += 1
     return result
